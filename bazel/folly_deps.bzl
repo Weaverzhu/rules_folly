@@ -1,7 +1,7 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-def folly_deps(with_gflags = 1, with_syslibs = 0):
+def folly_deps(with_gflags = 1, with_syslibs = 1):
     if with_gflags:
         maybe(
             http_archive,
@@ -96,6 +96,24 @@ glog_library(with_gflags = {})
             strip_prefix = "libevent-release-2.1.8-stable",
             build_file = "@com_github_storypku_rules_folly//third_party/libevent:libevent.BUILD",
         )
+
+    if with_syslibs:
+        maybe(
+            native.new_local_repository,
+            name = "com_github_axboe_liburing",
+            path = "/usr/include",
+            build_file = "@com_github_storypku_rules_folly//third_party/syslibs:liburing.BUILD",
+        )
+    else:
+        maybe(
+            http_archive,
+            name = "com_github_axboe_liburing",
+            sha256 = "f1e0500cb3934b0b61c5020c3999a973c9c93b618faff1eba75aadc95bb03e07",
+            urls = ["https://github.com/axboe/liburing/archive/refs/tags/liburing-2.1.tar.gz"],
+            strip_prefix = "liburing-liburing-2.1",
+            build_file = "@com_github_storypku_rules_folly//third_party/liburing:liburing.BUILD",
+        )
+
 
     maybe(
         http_archive,

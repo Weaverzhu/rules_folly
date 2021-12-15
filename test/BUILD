@@ -75,3 +75,14 @@ cc_test(
         "@folly//:follybenchmark",
     ],
 )
+
+
+cc_test(
+    name = "uring_test",
+    size = "small",
+    srcs = ["uring_test.cc"],
+    deps = [
+        "@com_google_googletest//:gtest_main",
+        "@folly",
+    ],
+)

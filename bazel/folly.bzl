@@ -34,7 +34,7 @@ def folly_library(
         with_unwind = 0,
         with_dwarf = 0,
         with_libaio = 0,
-        with_liburing = 0,
+        with_liburing = 1,
         enable_testing = 0):
     # Exclude tests, benchmarks, and other standalone utility executables from the
     # library sources.  Test sources are listed separately below.
